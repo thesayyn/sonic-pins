@@ -1,4 +1,4 @@
-/* Copyright 2024 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2018 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,8 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#ifndef PINS_PROTO_STRING_ERROR_COLLECTOR_H_
-#define PINS_PROTO_STRING_ERROR_COLLECTOR_H_
+#ifndef GUTIL_GUTIL_PROTO_STRING_ERROR_COLLECTOR_H_
+#define GUTIL_GUTIL_PROTO_STRING_ERROR_COLLECTOR_H_
+
+#include <string>
 
 #include "absl/strings/string_view.h"
 #include "absl/strings/substitute.h"
@@ -24,31 +26,33 @@ namespace gutil {
 
 // Collects errors by appending them to a given string.
 class StringErrorCollector : public google::protobuf::io::ErrorCollector {
-public:
+ public:
   // String error_text is unowned and must remain valid during the use of
   // StringErrorCollector.
-  explicit StringErrorCollector(std::string *error_text)
+  explicit StringErrorCollector(std::string* error_text)
       : error_text_{error_text} {};
-  StringErrorCollector(const StringErrorCollector &) = delete;
-  StringErrorCollector &operator=(const StringErrorCollector &) = delete;
+  StringErrorCollector(const StringErrorCollector&) = delete;
+  StringErrorCollector& operator=(const StringErrorCollector&) = delete;
 
-  // Implementation of protobuf::io::ErrorCollector::AddError.
-  void AddError(int line, int column, const std::string &message) override {
+  // Implementation of google::protobuf::io::ErrorCollector::RecordError.
+  void RecordError(int line, google::protobuf::io::ColumnNumber column,
+                   absl::string_view message) override {
     if (error_text_ != nullptr) {
       absl::SubstituteAndAppend(error_text_, "$0($1): $2\n", line, column,
                                 message);
     }
   }
 
-  // Implementation of protobuf::io::ErrorCollector::AddWarning.
-  void AddWarning(int line, int column, const std::string &message) override {
-    AddError(line, column, message);
+  // Implementation of google::protobuf::io::ErrorCollector::RecordWarning.
+  void RecordWarning(int line, google::protobuf::io::ColumnNumber column,
+                     absl::string_view message) override {
+    RecordError(line, column, message);
   }
 
-private:
-  std::string *const error_text_;
+ private:
+  std::string* const error_text_;
 };
 
-} // namespace gutil
+}  // namespace gutil
 
-#endif // PINS_PROTO_STRING_ERROR_COLLECTOR_H_
+#endif  // GUTIL_GUTIL_PROTO_STRING_ERROR_COLLECTOR_H_

@@ -38,7 +38,7 @@ cc_binary(
         "@com_google_absl//absl/strings:str_format",
         "@com_google_absl//absl/synchronization",
         "@com_google_absl//absl/time",
-        "@com_github_grpc_grpc//:grpc++_public_hdrs",
+        "@com_github_grpc_grpc//:grpc++",
         "//gutil:status",
         "//gutil:syslog_sink",
         "//p4rt_app/event_monitoring:app_state_db_port_table_event",
@@ -64,19 +64,18 @@ cc_binary(
 
 pkg_tar(
     name = "p4rt_binaries",
-    testonly = True,  # requred for p4rt_route_measurement_test
     srcs = [
         ":p4rt",  # TODO explore p4rt.stripped
         "//p4rt_app/scripts:p4rt_program_table",
         "//p4rt_app/scripts:p4rt_read",
-        "//p4rt_app/scripts:p4rt_route_measurement_test",
+       # "//p4rt_app/scripts:p4rt_route_measurement_test",
         "//p4rt_app/scripts:p4rt_set_forwarding_pipeline",
         "//p4rt_app/scripts:p4rt_write",
     ],
-    extension = "tar.bz2",
+    extension = "tar.gz",
     mode = "0755",
     package_dir = "/usr/local/bin",
-    visibility = ["//visibility:private"],
+    visibility = ["//visibility:public"],
 )
 
 pkg_tar(
@@ -84,7 +83,7 @@ pkg_tar(
     srcs = [
         ":p4rt.dwp",
     ],
-    extension = "tar.bz2",
+    extension = "tar.gz",
     mode = "0755",
     package_dir = "/usr/local/bin",
     visibility = ["//visibility:private"],

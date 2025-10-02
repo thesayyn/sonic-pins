@@ -27,6 +27,8 @@
 #include "p4rt_app/sonic/receive_genetlink.h"
 #include "swss/selectable.h"
 
+// test
+
 namespace p4rt_app {
 namespace sonic {
 
@@ -49,7 +51,7 @@ absl::Status PacketIoImpl::AddPacketIoPort(absl::string_view port_name) {
   if (port_to_socket_.contains(port_name)) {
     return absl::OkStatus();
   }
-  LOG(INFO) << "Adding PacketIO port '" << port_name << "'.";
+  LOG(INFO) << "Adding PacketIO porttt '" << port_name << "'.";
 
   std::string netdev_name(port_name);
   ASSIGN_OR_RETURN(auto port_params,

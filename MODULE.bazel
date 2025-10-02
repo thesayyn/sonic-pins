@@ -1,0 +1,106 @@
+module(name = "sonic-pins")
+
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+
+bazel_dep(name = "grpc", version = "1.74.1", repo_name = "com_github_grpc_grpc")
+bazel_dep(name = "gflags", version = "2.2.2", repo_name = "com_github_gflags_gflags")
+bazel_dep(name = "googletest", version = "1.11.0", repo_name = "com_google_googletest")
+bazel_dep(name = "glog", version = "0.5.0", repo_name = "com_github_google_glog")
+bazel_dep(name = "googleapis", version = "0.0.0-20240819-fe8ba054a", repo_name = "com_google_googleapis")
+bazel_dep(name = "googleapis-cc", version = "1.0.0")
+bazel_dep(name = "re2", version = "2024-07-02.bcr.1", repo_name = "com_googlesource_code_re2")
+bazel_dep(name = "abseil-cpp", version = "20240116.2", repo_name = "com_google_absl")
+
+bazel_dep(name = "protobuf", version = "29.1", repo_name = "com_google_protobuf")
+bazel_dep(name = "openconfig_gnoi", version = "0.6.2", repo_name = "com_github_gnoi")
+bazel_dep(name = "openconfig_gnmi", version = "0.14.1", repo_name = "com_github_gnmi")
+bazel_dep(name = "rules_distroless", version = "0.0.0")
+local_path_override(
+    module_name = "rules_distroless",
+    path = "../rules_distroless"
+)
+
+apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
+
+apt.sources_list(
+    architectures = ["amd64"],
+    components = ["main", "restricted", "universe"],
+    suites = ["focal", "focal-security", "focal-updates"],
+    uris = [
+        "https://snapshot.ubuntu.com/ubuntu/20240301T030400Z",
+        "mirror+https://snapshot.ubuntu.com/ubuntu/20240301T030400Z",
+    ],
+)
+
+
+apt.install(
+    dependency_set = "focal",
+    target_release = "focal",
+    packages = [
+        "libnl-3-dev",
+        "libnl-genl-3-dev",
+        "libnl-nf-3-dev",
+    ]
+)
+
+use_repo(apt, "focal")
+
+single_version_override(
+    module_name = "abseil-cpp",
+    version = "20240722.0"
+)
+
+single_version_override(
+    module_name = "grpc",
+    version = "1.71.1",
+)
+
+bazel_dep(name = "rules_boost", version = "0.0.0")
+archive_override(
+    module_name = "rules_boost",
+    urls = ["https://github.com/nelhage/rules_boost/archive/a0643ef5ea1f939da59c42a6a5f21d1c0ffcff4f.zip"],
+    strip_prefix = "rules_boost-a0643ef5ea1f939da59c42a6a5f21d1c0ffcff4f",
+    sha256 = ""
+)
+boost = use_extension("@rules_boost//:boost/repositories.bzl", "non_module_dependencies")
+use_repo(
+    boost,
+    "boost",
+)
+
+# P4
+bazel_dep(name = "p4runtime", repo_name = "com_github_p4lang_p4runtime")
+local_path_override(
+    module_name = "p4runtime",
+    path = "../p4runtime/proto"
+)
+
+bazel_dep(name = "p4constraints", repo_name = "com_github_p4lang_p4_constraints")
+local_path_override(
+    module_name = "p4constraints",
+    path = "../p4-constraints"
+)
+
+
+bazel_dep(name = "p4c", repo_name = "com_github_p4lang_p4c")
+local_path_override(
+    module_name = "p4c",
+    path = "../p4c"
+)
+
+
+
+bazel_dep(name = "gutil", version = "20250502.0", repo_name = "com_google_gutil")
+local_path_override(
+    module_name = "gutil",
+    path = "../gutil"
+)
+
+
+bazel_dep(name = "sonic-swss-common", version = "0.0.0", repo_name = "sonic_swss_common")
+local_path_override(
+    module_name = "sonic-swss-common",
+    path = "../sonic-swss-common"
+)
