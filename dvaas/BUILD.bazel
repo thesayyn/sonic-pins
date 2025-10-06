@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_google_googleapis_imports//:imports.bzl", "cc_proto_library")
+load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
 load("//p4_pdpi/testing:diff_test.bzl", "cmd_diff_test")
 
 package(
@@ -453,7 +453,7 @@ cc_test(
         "@com_google_googletest//:gtest_main",
     ],
 )
- 
+
 cmd_diff_test(
     name = "test_vector_stats_diff_test",
     actual_cmd = " | ".join([

@@ -14,7 +14,7 @@
 
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@com_github_p4lang_p4c//:bazel/p4_library.bzl", "p4_library")
-load("@com_google_googleapis_imports//:imports.bzl", "cc_proto_library")
+load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
 load("//gutil/embed_data:build_defs.bzl", "cc_embed_data")
 load("//p4_pdpi:pdgen.bzl", "p4_pd_proto")
 load("//p4_pdpi/testing:diff_test.bzl", "cmd_diff_test", "diff_test")
@@ -457,8 +457,8 @@ filegroup(
         ],
         outs = ["preprocessed_%s_%s.p4" % (platform, instantiation)],
         cmd = """
-              # genrules do not support retrieval of directories from dependencies, so we need to use a workaround. 
-              # We depend on v1model.p4 and retrieve its parent directory. 
+              # genrules do not support retrieval of directories from dependencies, so we need to use a workaround.
+              # We depend on v1model.p4 and retrieve its parent directory.
               P4INCLUDE_DIR=$$(dirname $(location @com_github_p4lang_p4c//:p4include/v1model.p4))
               $(CC) -E -x c -Wno-comment -C -undef -nostdinc -x assembler-with-cpp -I$$P4INCLUDE_DIR -I. %s \
               $(location //sai_p4/instantiations/google:%s.p4) > $(OUTS)
@@ -493,4 +493,3 @@ cc_test(
         "@com_google_googletest//:gtest_main",
     ],
 )
-
