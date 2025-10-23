@@ -169,9 +169,9 @@ cc_library(
         "@com_github_google_glog//:glog",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
-        "@focal//libnl-3-dev:libnl-3",
-        "@focal//libnl-nf-3-dev:libnl-nf-3",
-        "@focal//libnl-genl-3-dev:libnl-genl-3"
+        "@bookworm//libnl-3-dev:libnl-3",
+        "@bookworm//libnl-nf-3-dev:libnl-nf-3",
+        "@bookworm//libnl-genl-3-dev:libnl-genl-3"
     ],
 )
 

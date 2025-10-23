@@ -26,18 +26,22 @@ apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
 
 apt.sources_list(
     architectures = ["amd64"],
-    components = ["main", "restricted", "universe"],
-    suites = ["focal", "focal-security", "focal-updates"],
-    uris = [
-        "https://snapshot.ubuntu.com/ubuntu/20240301T030400Z",
-        "mirror+https://snapshot.ubuntu.com/ubuntu/20240301T030400Z",
-    ],
+    components = ["main"],
+    suites = ["bookworm", "bookworm-updates"],
+    uris = ["https://snapshot.debian.org/archive/debian/20251001T023456Z"],
+)
+
+apt.sources_list(
+    architectures = ["amd64"],
+    components = ["main"],
+    suites = ["bookworm-security"],
+    uris = ["https://snapshot.debian.org/archive/debian-security/20251001T023456Z"],
 )
 
 
 apt.install(
-    dependency_set = "focal",
-    target_release = "focal",
+    dependency_set = "bookworm",
+    target_release = "bookworm",
     packages = [
         "libnl-3-dev",
         "libnl-genl-3-dev",
@@ -45,7 +49,7 @@ apt.install(
     ]
 )
 
-use_repo(apt, "focal")
+use_repo(apt, "bookworm")
 
 single_version_override(
     module_name = "abseil-cpp",
