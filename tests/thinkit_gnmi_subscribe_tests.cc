@@ -30,7 +30,7 @@
 #include "p4_pdpi/p4_runtime_session.h"
 #include "proto/gnmi/gnmi.grpc.pb.h"
 #include "proto/gnmi/gnmi.pb.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "tests/thinkit_util.h"
 #include "thinkit/ssh_client.h"
 #include "thinkit/switch.h"

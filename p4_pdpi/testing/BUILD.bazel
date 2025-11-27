@@ -142,7 +142,6 @@ cc_library(
     hdrs = ["mock_p4_runtime_server.h"],
     deps = [
         "@com_github_grpc_grpc//:grpc++",
-        "@com_github_grpc_grpc//:grpc++_public_hdrs",
         "@com_github_p4lang_p4runtime//:p4runtime_cc_grpc",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest",
@@ -165,7 +164,7 @@ cc_test(
         "//p4_pdpi:ir_cc_proto",
         "//p4_pdpi:pd",
         "//p4_pdpi:sequencing",
-        "@com_github_p4lang_p4_constraints//gutils:status_matchers",
+        "//gutil:status_matchers",
         "@com_github_p4lang_p4runtime//:p4info_cc_proto",
         "@com_github_p4lang_p4runtime//:p4runtime_cc_proto",
         "@com_google_absl//absl/status",

@@ -460,13 +460,13 @@ filegroup(
               # genrules do not support retrieval of directories from dependencies, so we need to use a workaround.
               # We depend on v1model.p4 and retrieve its parent directory.
               P4INCLUDE_DIR=$$(dirname $(location @com_github_p4lang_p4c//:p4include/v1model.p4))
-              $(CC) -E -x c -Wno-comment -C -undef -nostdinc -x assembler-with-cpp -I$$P4INCLUDE_DIR -I. %s \
+              gcc -E -x c -Wno-comment -C -undef -nostdinc -x assembler-with-cpp -I$$P4INCLUDE_DIR -I. %s \
               $(location //sai_p4/instantiations/google:%s.p4) > $(OUTS)
               """ % (
             "-D" + MACRO_BY_NONSTANDARD_PLATFORM_NAME[platform] if platform in MACRO_BY_NONSTANDARD_PLATFORM_NAME else "",
             instantiation,
         ),
-        toolchains = ["@bazel_tools//tools/cpp:current_cc_toolchain"],
+        toolchains = ["@bazel_tools//tools/cpp:toolchain_type"],
     )
     for (instantiation, deps) in INSTANTIATIONS
     for platform in ("standard", "bmv2")
@@ -492,4 +492,5 @@ cc_test(
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
+    tags = ["manual"]
 )

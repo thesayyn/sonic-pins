@@ -193,7 +193,7 @@ cc_library(
     deps = [
         ":cpu_queue_translator",
         ":p4runtime_impl",
-        "@com_github_grpc_grpc//:grpc++_public_hdrs",
+        "@com_github_grpc_grpc//:grpc++",
         "@com_github_p4lang_p4runtime//:p4runtime_cc_proto",
         "@com_google_googletest//:gtest",
     ],

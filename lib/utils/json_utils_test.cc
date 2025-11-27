@@ -21,8 +21,8 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "gutil/status_matchers.h"
-#include "include/json/reader.h"
-#include "include/nlohmann/json.hpp"
+#include "json/reader.h"
+#include "nlohmann/json.hpp"
 
 namespace pins_test {
 

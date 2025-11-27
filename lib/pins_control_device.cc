@@ -52,7 +52,7 @@
 #include "proto/gnmi/gnmi.pb.h"
 #include "sai_p4/instantiations/google/instantiations.h"
 #include "sai_p4/instantiations/google/sai_p4info.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "sai_p4/instantiations/google/sai_pd.pb.h"
 #include "system/system.grpc.pb.h"
 #include "system/system.pb.h"

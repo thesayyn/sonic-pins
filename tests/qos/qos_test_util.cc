@@ -32,7 +32,7 @@
 #include "gutil/collections.h"
 #include "gutil/proto.h"
 #include "gutil/status.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "lib/gnmi/gnmi_helper.h"
 #include "lib/gnmi/openconfig.pb.h"
 #include "lib/utils/json_utils.h"

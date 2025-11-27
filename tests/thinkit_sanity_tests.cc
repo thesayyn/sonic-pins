@@ -37,7 +37,7 @@
 #include "gtest/gtest.h"
 #include "gutil/status.h"
 #include "gutil/status_matchers.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "lib/gnmi/gnmi_helper.h"
 #include "lib/validator/validator_lib.h"
 #include "p4/v1/p4runtime.grpc.pb.h"

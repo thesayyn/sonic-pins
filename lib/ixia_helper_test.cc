@@ -11,7 +11,7 @@
 #include "gutil/proto.h"
 #include "gutil/proto_matchers.h"
 #include "gutil/status_matchers.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "lib/ixia_helper.pb.h"
 #include "lib/utils/json_utils.h"
 #include "thinkit/generic_testbed.h"

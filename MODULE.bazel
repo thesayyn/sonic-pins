@@ -1,9 +1,16 @@
 module(name = "sonic-pins")
 
 
+bazel_dep(name = "sonic-build-infra", version = "0.0.0")
+local_path_override(
+    module_name = "sonic-build-infra",
+    path = "../sonic-build-infra"
+)
+bazel_dep(name = "rules_cc", version = "0.2.8")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_pkg", version = "1.1.0")
 
+bazel_dep(name = "rules_foreign_cc", version = "0.8.0")
 bazel_dep(name = "grpc", version = "1.74.1", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "gflags", version = "2.2.2", repo_name = "com_github_gflags_gflags")
 bazel_dep(name = "googletest", version = "1.11.0", repo_name = "com_google_googletest")
@@ -14,13 +21,30 @@ bazel_dep(name = "re2", version = "2024-07-02.bcr.1", repo_name = "com_googlesou
 bazel_dep(name = "abseil-cpp", version = "20240116.2", repo_name = "com_google_absl")
 
 bazel_dep(name = "protobuf", version = "29.1", repo_name = "com_google_protobuf")
-bazel_dep(name = "openconfig_gnoi", version = "0.6.2", repo_name = "com_github_gnoi")
-bazel_dep(name = "openconfig_gnmi", version = "0.14.1", repo_name = "com_github_gnmi")
+# bazel_dep(name = "openconfig_gnoi", version = "0.6.2", repo_name = "com_github_gnoi")
+# bazel_dep(name = "openconfig_gnmi", version = "0.14.1", repo_name = "com_github_gnmi")
 bazel_dep(name = "rules_distroless", version = "0.0.0")
 local_path_override(
     module_name = "rules_distroless",
     path = "../rules_distroless"
 )
+
+
+bind = use_extension("@sonic-build-infra//:bind.bzl", "bind")
+bind.alias(
+    name = "com_github_nlohmann_json",
+    aliases = {"nlohmann_json": "@bookworm//nlohmann-json3-dev:nlohmann-json3"}
+)
+bind.alias(
+    name = "com_github_z3prover_z3",
+    aliases = {"api": "@bookworm//libz3-dev:libz3"}
+)
+bind.alias(
+    name = "com_gnu_gmp",
+    aliases = {"gmp": "@bookworm//libgmp-dev:libgmp"}
+)
+use_repo(bind, "com_github_nlohmann_json", "com_github_z3prover_z3", "com_gnu_gmp")
+
 
 apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
 
@@ -46,6 +70,12 @@ apt.install(
         "libnl-3-dev",
         "libnl-genl-3-dev",
         "libnl-nf-3-dev",
+        "nlohmann-json3-dev",
+        # implicit dependency of p4c
+        "libgmp-dev",
+        "libfl-dev",
+        "libz3-dev",
+        "libbsd-dev"
     ]
 )
 
@@ -107,4 +137,83 @@ bazel_dep(name = "sonic-swss-common", version = "0.0.0", repo_name = "sonic_swss
 local_path_override(
     module_name = "sonic-swss-common",
     path = "../sonic-swss-common"
+)
+
+
+bazel_dep(name = "google_benchmark", version = "1.9.4", repo_name = "com_google_benchmark")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "com_github_gnmi",
+    # v0.10.0 release; commit-hash:5473f2ef722ee45c3f26eee3f4a44a7d827e3575.
+    url = "https://github.com/openconfig/gnmi/archive/refs/tags/v0.10.0.zip",
+    strip_prefix = "gnmi-0.10.0",
+    patch_args = ["-p1"],
+    patches = [
+        "//:bazel/patches/gnmi-001-fix_virtual_proto_import.patch",
+    ],
+    sha256 = "2231e1cc398a523fa840810fa6fdb8960639f7b91b57bb8f12ed8681e0142a67",
+)
+
+
+http_archive(
+    name = "com_github_gnoi",
+    # Newest commit on main on 2021-11-08.
+    url = "https://github.com/openconfig/gnoi/archive/1ece8ed91a0d5d283219a99eb4dc6c7eadb8f287.zip",
+    strip_prefix = "gnoi-1ece8ed91a0d5d283219a99eb4dc6c7eadb8f287",
+    sha256 = "991ff13a0b28f2cdc2ccb123261e7554d9bcd95c00a127411939a3a8c8a9cc62",
+)
+
+
+http_archive(
+    name = "com_github_bazelbuild_buildtools",
+    sha256 = "e3bb0dc8b0274ea1aca75f1f8c0c835adbe589708ea89bf698069d0790701ea3",
+    strip_prefix = "buildtools-5.1.0",
+    url = "https://github.com/bazelbuild/buildtools/archive/refs/tags/5.1.0.tar.gz",
+)
+
+# http_archive(
+#     name = "com_github_z3prover_z3",
+#     url = "https://github.com/Z3Prover/z3/archive/z3-4.8.12.tar.gz",
+#     strip_prefix = "z3-z3-4.8.12",
+#     sha256 = "e3aaefde68b839299cbc988178529535e66048398f7d083b40c69fe0da55f8b7",
+#     build_file = "@//:bazel/BUILD.z3.bazel",
+# )
+
+
+# http_archive(
+#     name = "com_gnu_gmp",
+#     urls = [
+#         "https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz",
+#         "https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.xz",
+#     ],
+#     strip_prefix = "gmp-6.2.1",
+#     sha256 = "fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2",
+#     build_file = "@//:bazel/BUILD.gmp.bazel",
+# )
+
+
+http_archive(
+    name = "com_github_ivmai_cudd",
+    build_file = "//:bazel/BUILD.cudd.bazel",
+    strip_prefix = "cudd-cudd-3.0.0",
+    sha256 = "5fe145041c594689e6e7cf4cd623d5f2b7c36261708be8c9a72aed72cf67acce",
+    urls = ["https://github.com/ivmai/cudd/archive/cudd-3.0.0.tar.gz"],
+)
+
+http_archive(
+    name = "com_jsoncpp",
+    url = "https://github.com/open-source-parsers/jsoncpp/archive/1.9.4.zip",
+    strip_prefix = "jsoncpp-1.9.4",
+    build_file = "//:bazel/BUILD.jsoncpp.bazel",
+    sha256 = "6da6cdc026fe042599d9fce7b06ff2c128e8dd6b8b751fca91eb022bce310880",
+)
+
+http_archive(
+    name = "com_github_otg_models",
+    url = "https://github.com/open-traffic-generator/models/archive/refs/tags/v0.12.5.zip",
+    strip_prefix = "models-0.12.5",
+    build_file = "//:bazel/BUILD.otg-models.bazel",
+    sha256 = "1a63e769f1d7f42c79bc1115babf54acbc44761849a77ac28f47a74567f10090",
 )

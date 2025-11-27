@@ -22,8 +22,8 @@
 #include "absl/container/flat_hash_map.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/string_view.h"
-#include "include/json/value.h"
-#include "include/nlohmann/json.hpp"
+#include "json/value.h"
+#include "nlohmann/json.hpp"
 
 namespace pins_test {
 

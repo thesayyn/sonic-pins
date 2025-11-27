@@ -41,7 +41,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "gutil/status.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "lib/gnmi/gnmi_helper.h"
 #include "proto/gnmi/gnmi.grpc.pb.h"
 #include "re2/re2.h"

@@ -27,7 +27,7 @@
 #include "gutil/proto_matchers.h"
 #include "gutil/status.h"
 #include "gutil/testing.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "lib/gnmi/gnmi_helper.h"
 #include "lib/p4rt/p4rt_port.h"
 #include "p4/config/v1/p4info.pb.h"

@@ -4,3 +4,5 @@ common --host_cxxopt='-std=c++17'
 # To allow loops with int and comparison against a .size() that's size_t.
 common --copt='-Wno-error=sign-compare'
 common --host_copt='-Wno-error=sign-compare'
+
+common --test_output=errors

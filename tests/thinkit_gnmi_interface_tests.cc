@@ -38,7 +38,7 @@
 #include "gutil/status.h"
 #include "gutil/status_matchers.h"
 #include "gutil/testing.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "lib/gnmi/gnmi_helper.h"
 #include "p4_pdpi/pd.h"
 #include "proto/gnmi/gnmi.grpc.pb.h"

@@ -33,7 +33,7 @@
 #include "gutil/status.h"
 #include "gutil/status_matchers.h"  // NOLINT: Need to add status_matchers.h for using `ASSERT_OK` in upstream code.
 #include "gutil/testing.h"
-#include "include/nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 #include "lib/gnmi/gnmi_helper.h"
 #include "lib/utils/generic_testbed_utils.h"
 #include "p4_pdpi/netaddr/ipv4_address.h"
