@@ -6,3 +6,11 @@ common --copt='-Wno-error=sign-compare'
 common --host_copt='-Wno-error=sign-compare'
 
 common --test_output=errors
+common --features=external_include_paths
+common --per_file_copt=external/.*@-w
+common --per_file_copt=.*protobuf.*@-w
+
+
+# Don’t want to push a rules author to update their deps if not needed.
+# https://bazel.build/reference/command-line-reference#flag--check_direct_dependencies
+common --check_direct_dependencies=off

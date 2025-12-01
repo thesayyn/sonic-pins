@@ -101,6 +101,7 @@ def end_to_end_test(
         outs = [packets_output_file, smt_output_file],
         tools = ["//p4_symbolic:main"],
         cmd = " ".join([
+            "echo 'here'; pwd\n",
             "$(location //p4_symbolic:main)",
             ("--bmv2=$(location %s)" % bmv2_file),
             ("--p4info=$(location %s)" % p4info_file),

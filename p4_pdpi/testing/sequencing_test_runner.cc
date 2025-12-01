@@ -26,7 +26,7 @@
 #include "gtest/gtest.h"
 #include "gutil/proto.h"
 #include "gutil/testing.h"
-#include "gutils/status_matchers.h"
+#include "gutil/status_matchers.h"
 #include "p4/config/v1/p4info.pb.h"
 #include "p4/v1/p4runtime.pb.h"
 #include "p4_pdpi/ir.h"
