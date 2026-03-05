@@ -1,4 +1,8 @@
-module(name = "sonic-pins")
+# Keep bazel_compatibility in sync with sonic-buildimage's .bazelversion.
+module(
+    name = "sonic-pins",
+    bazel_compatibility = [">=8.5.1", "<=8.5.1"],
+)
 
 
 bazel_dep(name = "sonic-build-infra", version = "0.0.0")
@@ -89,6 +93,13 @@ single_version_override(
 single_version_override(
     module_name = "grpc",
     version = "1.71.1",
+)
+
+# rules_go 0.56.1 (pulled transitively by grpc) is incompatible
+# with Bazel 8.5.x due to Facts.clear() API change. Minimum needed: 0.59.0.
+single_version_override(
+    module_name = "rules_go",
+    version = "0.60.0",
 )
 
 bazel_dep(name = "rules_boost", version = "0.0.0")
