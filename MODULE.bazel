@@ -8,7 +8,7 @@ module(
 bazel_dep(name = "sonic-build-infra", version = "0.0.0")
 local_path_override(
     module_name = "sonic-build-infra",
-    path = "../sonic-build-infra"
+    path = "../../sonic-build-infra"
 )
 bazel_dep(name = "rules_cc", version = "0.2.8")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
@@ -28,11 +28,11 @@ bazel_dep(name = "protobuf", version = "29.1", repo_name = "com_google_protobuf"
 # bazel_dep(name = "openconfig_gnoi", version = "0.6.2", repo_name = "com_github_gnoi")
 # bazel_dep(name = "openconfig_gnmi", version = "0.14.1", repo_name = "com_github_gnmi")
 bazel_dep(name = "rules_distroless", version = "0.0.0")
-local_path_override(
+git_override(
     module_name = "rules_distroless",
-    path = "../rules_distroless"
+    commit = "ebfd74a2e07b83235e064bb63ace98a1a5223e02",
+    remote = "https://github.com/bazel-contrib/rules_distroless",
 )
-
 
 bind = use_extension("@sonic-build-infra//:bind.bzl", "bind")
 bind.alias(
@@ -119,20 +119,20 @@ use_repo(
 bazel_dep(name = "p4runtime", repo_name = "com_github_p4lang_p4runtime")
 local_path_override(
     module_name = "p4runtime",
-    path = "../p4runtime/proto"
+    path = "../../../../p4runtime/proto"
 )
 
 bazel_dep(name = "p4constraints", repo_name = "com_github_p4lang_p4_constraints")
 local_path_override(
     module_name = "p4constraints",
-    path = "../p4-constraints"
+    path = "../../../../p4-constraints"
 )
 
 
 bazel_dep(name = "p4c", repo_name = "com_github_p4lang_p4c")
 local_path_override(
     module_name = "p4c",
-    path = "../p4c"
+    path = "../../../../p4c"
 )
 
 
@@ -140,14 +140,14 @@ local_path_override(
 bazel_dep(name = "gutil", version = "20250502.0", repo_name = "com_google_gutil")
 local_path_override(
     module_name = "gutil",
-    path = "../gutil"
+    path = "../../../../gutil"
 )
 
 
 bazel_dep(name = "sonic-swss-common", version = "0.0.0", repo_name = "sonic_swss_common")
 local_path_override(
     module_name = "sonic-swss-common",
-    path = "../sonic-swss-common"
+    path = "../../sonic-swss-common"
 )
 
 
@@ -227,4 +227,18 @@ http_archive(
     strip_prefix = "models-0.12.5",
     build_file = "//:bazel/BUILD.otg-models.bazel",
     sha256 = "1a63e769f1d7f42c79bc1115babf54acbc44761849a77ac28f47a74567f10090",
+)
+
+bazel_dep(name = "libnl3", version = "3.7.0")
+local_path_override(
+    module_name = "libnl3",
+    path = "../../libnl3",
+)
+
+# TODO(bazel-ready): replace with new version of rules_m4 when this merges:
+#  https://github.com/jmillikin/rules_m4/pull/23
+git_override(
+    module_name = "rules_m4",
+    commit = "54e35332761523b8b8c7e7a17c8fd3733e53e3e7",
+    remote = "https://github.com/blorente/rules_m4",
 )
